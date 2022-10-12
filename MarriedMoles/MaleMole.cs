@@ -17,6 +17,7 @@ namespace MarriedMoles
         public bool isMarried;
         private int hornyLevel;
 
+        public FemaleMole Spouse;
 
         protected int age;
 
@@ -30,6 +31,7 @@ namespace MarriedMoles
             // if born during game - start full
             SetLocation(location);
             this.isMarried = false;
+            Spouse = null;
             if (randomAge)
             {
                 age = RANDOM.Next(MAX_AGE);

@@ -10,14 +10,14 @@ namespace MarriedMoles
     internal class FemaleMole : Mole
     {
         static readonly int BREEDING_AGE = 30; // static readonly are always written all caps
-        static readonly int MAX_AGE = 150;
-        static readonly double BREEDING_PROBABILITY = 0.50;
+        static readonly int MAX_AGE = 200;
+        static readonly double BREEDING_PROBABILITY = 0.5;
         static readonly int MAX_LITTER_SIZE = 6;
         static readonly int MAX_RAGE = 50;
-        static readonly int MAX_SAD = 40;
+        static readonly int MAX_SAD = 60;
         static readonly Random RANDOM = new Random();
 
-        public Mole Spouse;
+        public MaleMole Spouse;
 
 
         public bool isMarried;
@@ -107,36 +107,41 @@ namespace MarriedMoles
                 var locList = field.AdjacentLocations(location);
                 foreach (var loc in locList)
                 {
-                    var actor = field.GetActorAt(loc);
-                    var maleMole = actor as MaleMole;
-                    if (maleMole != null && maleMole.IsAlive && !maleMole.isMarried)
-                    {
-                        var newMoleCount = RANDOM.Next(MAX_LITTER_SIZE) + 1;
-                        var freeSpaces = field.MOLEGetFREEAdjacentLocations(location);///////////// FOR MOLES MAKES NEW FREE LOC AREA
-                        isMarried = true;
-                        maleMole.isMarried = true;
-                        while (freeSpaces.Count > 0 && newMoleCount > 0)
+                    
+                        var actor = field.GetActorAt(loc);
+                        var maleMole = actor as MaleMole;
+                        if (maleMole != null && maleMole.IsAlive && !maleMole.isMarried)
                         {
-                            var babySex = RANDOM.NextDouble();
+                            var newMoleCount = RANDOM.Next(MAX_LITTER_SIZE) + 1;
+                            var freeSpaces = field.MOLEGetFREEAdjacentLocations(location);///////////// FOR MOLES MAKES NEW FREE LOC AREA
+                            isMarried = true;
+                            Spouse = maleMole;
+                            maleMole.isMarried = true;
+                            maleMole.Spouse = this;
 
-                            if (babySex < 0.4)
+                            while (freeSpaces.Count > 0 && newMoleCount > 0)
                             {
-                                var babyMole = new FemaleMole(field, freeSpaces[0], false);
-                                freeSpaces.RemoveAt(0);
-                                newMoleCount--;
-                                newMoles.Add(babyMole);
-                            }
-                            else
-                            {
-                                var babyMole = new MaleMole(field, freeSpaces[0], false);
-                                freeSpaces.RemoveAt(0);
-                                newMoleCount--;
-                                newMoles.Add(babyMole);
+                                var babySex = RANDOM.NextDouble();
+
+                                if (babySex < 0.4)
+                                {
+                                    var babyMole = new FemaleMole(field, freeSpaces[0], false);
+                                    freeSpaces.RemoveAt(0);
+                                    newMoleCount--;
+                                    newMoles.Add(babyMole);
+                                }
+                                else
+                                {
+                                    var babyMole = new MaleMole(field, freeSpaces[0], false);
+                                    freeSpaces.RemoveAt(0);
+                                    newMoleCount--;
+                                    newMoles.Add(babyMole);
+                                }
+
                             }
 
                         }
-
-                    }
+                    
                 }
 
 
