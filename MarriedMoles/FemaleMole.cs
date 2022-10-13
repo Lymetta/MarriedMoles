@@ -10,21 +10,23 @@ namespace MarriedMoles
     internal class FemaleMole : Mole
     {
         static readonly int BREEDING_AGE = 30; // static readonly are always written all caps
-        static readonly int MAX_AGE = 200;
-        static readonly double BREEDING_PROBABILITY = 0.5;
-        static readonly int MAX_LITTER_SIZE = 6;
-        static readonly int MAX_RAGE = 50;
-        static readonly int MAX_SAD = 60;
+        static readonly int MAX_AGE = 2000;
+        static readonly double BREEDING_PROBABILITY = 0.7;
+        static readonly int MAX_LITTER_SIZE = 10;
+        static readonly int MAX_RAGE = 10;
+
+        //static readonly int MAX_SAD = 60;
         static readonly Random RANDOM = new Random();
 
         public MaleMole Spouse;
 
 
         public bool isMarried;
+        
 
 
         protected int age;
-        protected int sadness;
+        //protected int sadness;
 
 
 
@@ -35,12 +37,15 @@ namespace MarriedMoles
             // if born during game - start full
             SetLocation(location);
             this.isMarried = false;
+            this.sexyLevel = RANDOM.Next(MAX_SEXINESS) + 1;
+            Spouse = null;
+            
 
             if (randomAge)
             {
                 age = RANDOM.Next(MAX_AGE);
 
-                sadness = RANDOM.Next(MAX_SAD);
+                
             }
 
 
@@ -68,15 +73,16 @@ namespace MarriedMoles
             }
         }
 
-
-        protected override void IncreaseRage()
+        private void CheatedOn()
         {
-            if (isMarried)
+            if (Spouse!=null && Spouse.cheater)
             {
+                
                 rageLevel++;
+                
             }
-
         }
+        
 
         private void IncreaseAge()
         {
@@ -89,17 +95,22 @@ namespace MarriedMoles
 
         public override void DropBomb(List<IActor> newBomb)
         {
-            var freeSpaces = field.MOLEGetFREEAdjacentLocations(location);
-            if (freeSpaces.Count > 0)
+            var bombDropChance = RANDOM.NextDouble();
+
+            if (bombDropChance < 0.25) 
             {
-                var bomb = new Bomb(field, freeSpaces[0], 0);
-                newBomb.Add(bomb);
-                rageLevel = 0;
-
+                
+                var freeSpaces = field.MOLEGetFREEAdjacentLocations(location);
+                if (freeSpaces.Count > 0)
+                {
+                var droppedBomb = new Bomb(field, freeSpaces[0], 0);
+                newBomb.Add(droppedBomb);
+                
+                }        
             }
-
-
+          
         }
+
         private void GiveBirth(List<IActor> newMoles)
         {
             if (age >= BREEDING_AGE && RANDOM.NextDouble() < BREEDING_PROBABILITY) // nextdouble returns a number from 0 to 1
@@ -107,23 +118,33 @@ namespace MarriedMoles
                 var locList = field.AdjacentLocations(location);
                 foreach (var loc in locList)
                 {
-                    
-                        var actor = field.GetActorAt(loc);
-                        var maleMole = actor as MaleMole;
-                        if (maleMole != null && maleMole.IsAlive && !maleMole.isMarried)
+
+                    var actor = field.GetActorAt(loc);
+                    var maleMole = actor as MaleMole;
+                    bool withinSexinessRange = false;
+
+                    if (maleMole != null && maleMole.IsAlive)
+                    {
+                        if (sexyLevel >= maleMole.sexyLevel)
+                        {
+                            withinSexinessRange = true;
+                        }
+
+                        if (!maleMole.isMarried && withinSexinessRange && !isMarried)
                         {
                             var newMoleCount = RANDOM.Next(MAX_LITTER_SIZE) + 1;
-                            var freeSpaces = field.MOLEGetFREEAdjacentLocations(location);///////////// FOR MOLES MAKES NEW FREE LOC AREA
+                            var freeSpaces = field.MOLEGetFREEAdjacentLocations(location);
                             isMarried = true;
                             Spouse = maleMole;
                             maleMole.isMarried = true;
                             maleMole.Spouse = this;
-
+                            
+                            
                             while (freeSpaces.Count > 0 && newMoleCount > 0)
                             {
                                 var babySex = RANDOM.NextDouble();
 
-                                if (babySex < 0.4)
+                                if (babySex < 0.5)
                                 {
                                     var babyMole = new FemaleMole(field, freeSpaces[0], false);
                                     freeSpaces.RemoveAt(0);
@@ -141,15 +162,15 @@ namespace MarriedMoles
                             }
 
                         }
-                    
+
+                    }
+
                 }
-
-
             }
         }
 
 
-        public void DeathByLoneliness()
+       /* public void DeathByLoneliness()
         {
             if (!isMarried)
             {
@@ -163,24 +184,24 @@ namespace MarriedMoles
 
 
         }
-
+       */
 
 
         public override void Act(List<IActor> newActors)
         {
             IncreaseAge();
-            IncreaseRage();
+            
 
 
             if (alive)
             {
                 GiveBirth(newActors);
+                CheatedOn();
 
-
-                if (rageLevel >= MAX_RAGE)
+                if (rageLevel>= MAX_RAGE)
                 {
                     DropBomb(newActors);
-
+                    SetDead();
                 }
                 else
                 {
@@ -190,7 +211,7 @@ namespace MarriedMoles
                         SetLocation(freeLocation[0]);
 
                     }
-                    DeathByLoneliness();
+                    //DeathByLoneliness();
 
                 }
 

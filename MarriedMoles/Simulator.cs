@@ -11,8 +11,8 @@ namespace MarriedMoles
     {
         static readonly double FOX_CREATION_PROBABILITY = 0.02;
         static readonly double RABBIT_CREATION_PROBABILITY = 0.08;
-        static readonly double MALE_MOLE_CREATION_PROBABILITY = 0.01;
-        static readonly double FEMALE_MOLE_CREATION_PROBABILITY = 0.009;
+        static readonly double MALE_MOLE_CREATION_PROBABILITY = 0.06;
+        static readonly double FEMALE_MOLE_CREATION_PROBABILITY = 0.05;
 
 
         private Field field;
@@ -82,15 +82,16 @@ namespace MarriedMoles
             {
                 for (int y = 0; y < field.Height; y++)
                 {
-                    if (rand.NextDouble() < FEMALE_MOLE_CREATION_PROBABILITY)
-                    {
-                        actors.Add(new FemaleMole(field, new Point(x, y), true));
-                    }
-                    else if (rand.NextDouble() < MALE_MOLE_CREATION_PROBABILITY)
+                    if (rand.NextDouble() < MALE_MOLE_CREATION_PROBABILITY)
                     {
                         actors.Add(new MaleMole(field, new Point(x, y), true));
                     }
-                    else if (rand.NextDouble() < FOX_CREATION_PROBABILITY)
+                    else if (rand.NextDouble() < FEMALE_MOLE_CREATION_PROBABILITY)
+                    {
+                        actors.Add(new FemaleMole(field, new Point(x, y), true));
+                    }
+                    
+                    if (rand.NextDouble() < FOX_CREATION_PROBABILITY)
                     {
                         actors.Add(new Fox(field, new Point(x, y), true));
 

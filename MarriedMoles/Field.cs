@@ -11,6 +11,7 @@ namespace MarriedMoles
     {
         int width, height;
         IActor[,] field;
+        private Random random = new Random();
 
         public int Width // you can get the width/height, but cant change it
         {
@@ -94,7 +95,37 @@ namespace MarriedMoles
             list = RandomizedList(list); // mixes up the positions in the list
             return list;
         }
+        public List<Point> MOLEAdjacentLocations(Point position)
+        {
 
+            var list = new List<Point>();
+            //x, y
+
+            for (int xOffSet = -2; xOffSet <= 2; xOffSet++)
+            {
+                var x = position.X + xOffSet;
+                if (x >= 0 && x < width)// checks if within bounds of field
+                {
+                    for (int yOffSet = -2; yOffSet <= 2; yOffSet++)
+                    {
+                        var y = position.Y + yOffSet;
+                        if (y >= 0 && y < height)
+                        {
+                            if (xOffSet != 0 || yOffSet != 0) // doesnt add to list if original position 
+                            {
+                                list.Add(new Point(x, y));
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
+
+            list = RandomizedList(list); // mixes up the positions in the list
+            return list;
+        }
         public List<Point> GetFREEAdjacentLocations(Point position)
         {
             var list = AdjacentLocations(position);
@@ -113,7 +144,7 @@ namespace MarriedMoles
 
         public List<Point> MOLEGetFREEAdjacentLocations(Point position)
         {
-            var list = AdjacentLocations(position);
+            var list = MOLEAdjacentLocations(position);
             var free = new List<Point>();
             foreach (var pos in list)
             {
@@ -130,16 +161,13 @@ namespace MarriedMoles
         private List<Point> RandomizedList(List<Point> list) // fishhook method // returns random list
         {
 
-            var random = new Random();
-            var newList = new List<Point>();
-            while (list.Count > 0)
+            for(int i = list.Count - 1; i > 0; i--)
             {
-                var i = random.Next(list.Count);
-                newList.Add(list[i]);
-                list.RemoveAt(i);
+                var j = random.Next(i);
+                (list[i], list[j]) = (list[j], list[i]);
             }
 
-            return newList;
+            return list;
         }
 
         public List<Point> DeathByMoleLocations(Point position, int range = 10)

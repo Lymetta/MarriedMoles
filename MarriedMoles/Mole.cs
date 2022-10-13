@@ -9,16 +9,17 @@ namespace MarriedMoles
 {
     internal class Mole: IActor
     {
-        static readonly int MAX_RAGE = 50; // static readonly are always written all caps
+        static readonly int MAX_RAGE = 30; // static readonly are always written all caps
 
         static readonly Random RANDOM = new Random();
-
+        protected int MAX_SEXINESS = 10;
 
         protected bool alive = true;
         protected Point location = new Point(-1, -1); // if all negative - actor is not in field
 
         protected Field field; // nuorodo i lauka, kurioje padetyje triusis yra
         protected int rageLevel;
+        public int sexyLevel;
 
         public bool IsAlive => alive;
 
@@ -32,7 +33,7 @@ namespace MarriedMoles
             this.field = field;
             // if born during game - start full
             SetLocation(location);
-
+            this.sexyLevel = RANDOM.Next(MAX_SEXINESS) + 1;
 
 
 

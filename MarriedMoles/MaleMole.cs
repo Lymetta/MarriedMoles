@@ -9,8 +9,8 @@ namespace MarriedMoles
 {
     internal class MaleMole :Mole
     { // static readonly are always written all caps
-        static readonly int MAX_AGE = 200;
-        static readonly int MAX_HORNINESS = 10;
+        static readonly int MAX_AGE = 2000;
+        static readonly int MAX_HORNINESS = 5;
 
 
         static readonly Random RANDOM = new Random();
@@ -20,6 +20,7 @@ namespace MarriedMoles
         public FemaleMole Spouse;
 
         protected int age;
+        public bool cheater;
 
 
 
@@ -32,6 +33,8 @@ namespace MarriedMoles
             SetLocation(location);
             this.isMarried = false;
             Spouse = null;
+            this.cheater = false;
+            this.sexyLevel = RANDOM.Next(MAX_SEXINESS) + 1;
             if (randomAge)
             {
                 age = RANDOM.Next(MAX_AGE);
@@ -74,6 +77,20 @@ namespace MarriedMoles
             }
         }
 
+        private void IncreaseSexy()
+        {
+            if (isMarried || cheater)
+            {
+                if (sexyLevel >= MAX_SEXINESS)
+                {
+                    sexyLevel = 1;
+                }
+                else
+                {
+                    sexyLevel++;
+                }
+            }
+        }
 
 
         private void IncreaseHorny()
@@ -84,12 +101,13 @@ namespace MarriedMoles
             }
         }
 
-        private void ResetMarriage()
+        private void ResetMarriageStartCheat()
         {
             if (hornyLevel >= MAX_HORNINESS)
             {
                 isMarried = false;
                 hornyLevel = 0;
+                cheater = true;
             }
         }
 
@@ -102,7 +120,8 @@ namespace MarriedMoles
             if (alive)
             {
                 IncreaseHorny();
-                ResetMarriage();
+                IncreaseSexy();
+                ResetMarriageStartCheat();
                 var freeLocation = field.MOLEGetFREEAdjacentLocations(location); // might return empty list (no free spaces)
                 if (freeLocation.Count > 0)
                 {

@@ -40,28 +40,26 @@ namespace MarriedMoles
 
                     //if (i % 2 ==0 ^ j % 2 ==0) color = Color.Black; // grieztai ARBA = ^
 
-                    if (actor is Fox)
-                    {
-                        color = Color.DarkGray;
-                    }
-                    else if (actor is Rabbit)
-                    {
-                        color = Color.Orange;
-                    }
-                    else if (actor is Bomb)
+                    
+                    
+                     if (actor is Bomb)
                     {
                         color = Color.Red;
                     }
                     else if (actor is MaleMole)
                     {
                         var male = actor as MaleMole;
-                        if (male.isMarried)
+                        if (male.cheater)
                         {
-                            color = Color.Purple;
+                            color = Color.Black;
+                        }
+                        else if (male.isMarried)
+                        {
+                            color = Color.MediumPurple;
                         }
                         else
                         {
-                            color = Color.MediumPurple;
+                            color = Color.Pink;
                         }
                     }
                     else if (actor is FemaleMole)
@@ -76,6 +74,15 @@ namespace MarriedMoles
                             color = Color.Cyan;
                         }
 
+                    }
+                    
+                    else if (actor is Fox)
+                    {
+                        color = Color.DarkGray;
+                    }
+                    else if (actor is Rabbit)
+                    {
+                        color = Color.Orange;
                     }
 
                     bitmap.SetPixel(i, j, color);
