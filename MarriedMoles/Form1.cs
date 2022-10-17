@@ -16,8 +16,8 @@ namespace MarriedMoles
     {
         Simulator simulator;
         Bitmap bitmap;
-        int width = 200;
-        int height = 200;
+        int width = 100;
+        int height = 100;
 
         public Form1()
         {
@@ -127,6 +127,11 @@ namespace MarriedMoles
         {
             if (int.TryParse(textBox1.Text, out var skaicius))
                 simulator.Run(skaicius);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            simulator.Reset();
         }
     }
 }
