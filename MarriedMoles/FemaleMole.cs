@@ -10,7 +10,7 @@ namespace MarriedMoles
     internal class FemaleMole : Mole
     {
         static readonly int BREEDING_AGE = 30; // static readonly are always written all caps
-        static readonly int MAX_AGE = 2000;
+        static readonly int MAX_AGE = 1000;
         static readonly double BREEDING_PROBABILITY = 0.7;
         static readonly int MAX_LITTER_SIZE = 10;
         static readonly int MAX_RAGE = 10;
@@ -138,6 +138,10 @@ namespace MarriedMoles
                             Spouse = maleMole;
                             maleMole.isMarried = true;
                             maleMole.Spouse = this;
+                            if (maleMole.cheater)
+                            {
+                                maleMole.cheater = false;
+                            }
                             
                             
                             while (freeSpaces.Count > 0 && newMoleCount > 0)

@@ -9,7 +9,7 @@ namespace MarriedMoles
 {
     internal class MaleMole :Mole
     { // static readonly are always written all caps
-        static readonly int MAX_AGE = 2000;
+        static readonly int MAX_AGE = 1000;
         static readonly int MAX_HORNINESS = 5;
 
 
@@ -111,7 +111,7 @@ namespace MarriedMoles
             }
         }
 
-
+        
 
         public override void Act(List<IActor> newActors)
         {
@@ -122,6 +122,7 @@ namespace MarriedMoles
                 IncreaseHorny();
                 IncreaseSexy();
                 ResetMarriageStartCheat();
+                
                 var freeLocation = field.MOLEGetFREEAdjacentLocations(location); // might return empty list (no free spaces)
                 if (freeLocation.Count > 0)
                 {

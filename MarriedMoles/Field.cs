@@ -170,7 +170,7 @@ namespace MarriedMoles
             return list;
         }
 
-        public List<Point> DeathByMoleLocations(Point position, int range = 5)
+        public List<Point> DeathByMoleLocations(Point position, int range = 10)
         {
             var list = new List<Point>();
             for (int xOffSet = -range; xOffSet <= range; xOffSet++)

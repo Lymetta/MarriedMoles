@@ -90,17 +90,17 @@ namespace MarriedMoles
                     {
                         actors.Add(new FemaleMole(field, new Point(x, y), true));
                     }
-                    
-                    //if (rand.NextDouble() < FOX_CREATION_PROBABILITY)
-                    //{
-                    //    actors.Add(new Fox(field, new Point(x, y), true));
 
-                    //}
-                    //else if (rand.NextDouble() < RABBIT_CREATION_PROBABILITY)
-                    //{
-                    //    var rabbit = new Rabbit(field, new Point(x, y), true); // uses a bit more memory, but easier to read
-                    //    actors.Add(rabbit);
-                    //}
+                    if (rand.NextDouble() < FOX_CREATION_PROBABILITY)
+                    {
+                        actors.Add(new Fox(field, new Point(x, y), true));
+
+                    }
+                    else if (rand.NextDouble() < RABBIT_CREATION_PROBABILITY)
+                    {
+                        var rabbit = new Rabbit(field, new Point(x, y), true); // uses a bit more memory, but easier to read
+                        actors.Add(rabbit);
+                    }
                 }
             }
         }

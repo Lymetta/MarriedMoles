@@ -16,8 +16,8 @@ namespace MarriedMoles
     {
         Simulator simulator;
         Bitmap bitmap;
-        int width = 100;
-        int height = 100;
+        int width = 150;
+        int height = 150;
 
         public Form1()
         {
@@ -51,15 +51,15 @@ namespace MarriedMoles
                         var male = actor as MaleMole;
                         if (male.cheater)
                         {
-                            color = Color.Black;
+                            color = Color.GreenYellow;
                         }
                         else if (male.isMarried)
                         {
-                            color = Color.MediumPurple;
+                            color = Color.DarkBlue;
                         }
                         else
                         {
-                            color = Color.Pink;
+                            color = Color.Cyan;
                         }
                     }
                     else if (actor is FemaleMole)
@@ -67,11 +67,11 @@ namespace MarriedMoles
                         var female = actor as FemaleMole;
                         if (female.isMarried)
                         {
-                            color = Color.Blue;
+                            color = Color.HotPink;
                         }
                         else
                         {
-                            color = Color.Cyan;
+                            color = Color.Pink;
                         }
 
                     }
