@@ -15,19 +15,14 @@ namespace MarriedMoles
         static readonly int MAX_LITTER_SIZE = 10;
         static readonly int MAX_RAGE = 10;
 
-        //static readonly int MAX_SAD = 60;
         static readonly Random RANDOM = new Random();
 
         public MaleMole Spouse;
 
-
         public bool isMarried;
         
-
-
         protected int age;
-        //protected int sadness;
-
+        
 
 
         public FemaleMole(Field field, Point location, bool randomAge = false) : base(field, location) // make 2 constructors ( last one is true/false) // if rabbit is from beginning of game - randomage is given,
@@ -68,14 +63,14 @@ namespace MarriedMoles
             if (location.X > -1)
             {
                 field.Clear(location);
-                field = null; // for garbage collector, so it know the rabbit will not be used anymore and can be fully removed with all links
+                field = null; 
                 location = new Point(-1, -1);
             }
         }
 
         private void CheatedOn()
         {
-            if (Spouse!=null && Spouse.cheater)
+            if (Spouse!=null && (Spouse.cheater || Spouse.Spouse!=this))
             {
                 
                 rageLevel++;
@@ -174,22 +169,6 @@ namespace MarriedMoles
         }
 
 
-       /* public void DeathByLoneliness()
-        {
-            if (!isMarried)
-            {
-                sadness++;
-                if (sadness >= MAX_SAD)
-                {
-                    SetDead();
-                }
-            }
-
-
-
-        }
-       */
-
 
         public override void Act(List<IActor> newActors)
         {
@@ -215,7 +194,7 @@ namespace MarriedMoles
                         SetLocation(freeLocation[0]);
 
                     }
-                    //DeathByLoneliness();
+                    
 
                 }
 

@@ -10,7 +10,7 @@ namespace MarriedMoles
     internal class MaleMole :Mole
     { // static readonly are always written all caps
         static readonly int MAX_AGE = 1000;
-        static readonly int MAX_HORNINESS = 5;
+        static readonly int MAX_HORNINESS = 10;
 
 
         static readonly Random RANDOM = new Random();

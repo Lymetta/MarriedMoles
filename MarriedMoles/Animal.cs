@@ -60,22 +60,6 @@ namespace MarriedMoles
             }
         }
 
-        protected void GiveBirth(List<IActor> newAnimals)
-        {
-            if (age >= BREEDING_AGE && RANDOM.NextDouble() < BREEDING_PROBABILITY) // nextdouble returns a number from 0 to 1
-            {
-                var newAnimalCount = RANDOM.Next(MAX_LITTER_SIZE) + 1; // at least one baby
-                var freeSpaces = field.GetFREEAdjacentLocations(location);
-                while (freeSpaces.Count > 0 && newAnimalCount > 0)
-                {
-                    var animal = NewChild(field, freeSpaces[0]);
-                    freeSpaces.RemoveAt(0);
-                    newAnimalCount--;
-                    newAnimals.Add(animal);
-                }
-            }
-        }
-
-        protected abstract IActor NewChild(Field field, Point location);
+        
     }
 }

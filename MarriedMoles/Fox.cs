@@ -39,9 +39,20 @@ namespace MarriedMoles
 
 
 
-        protected override IActor NewChild(Field field, Point location)
+        private void GiveBirth(List<IActor> newFoxes)
         {
-            return new Fox(field, location);
+            if (age >= BREEDING_AGE && RANDOM.NextDouble() < BREEDING_PROBABILITY) // nextdouble returns a number from 0 to 1
+            {
+                var newFoxesCount = RANDOM.Next(MAX_LITTER_SIZE) + 1; // at least one baby
+                var freeSpaces = field.GetFREEAdjacentLocations(location);
+                while (freeSpaces.Count > 0 && newFoxesCount > 0)
+                {
+                    var fox = new Fox(field, freeSpaces[0]);
+                    freeSpaces.RemoveAt(0);
+                    newFoxesCount--;
+                    newFoxes.Add(fox);
+                }
+            }
         }
 
 

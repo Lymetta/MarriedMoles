@@ -51,11 +51,11 @@ namespace MarriedMoles
                         var male = actor as MaleMole;
                         if (male.cheater)
                         {
-                            color = Color.GreenYellow;
+                            color = Color.YellowGreen;
                         }
                         else if (male.isMarried)
                         {
-                            color = Color.DarkBlue;
+                            color = Color.Blue;
                         }
                         else
                         {
@@ -133,5 +133,7 @@ namespace MarriedMoles
         {
             simulator.Reset();
         }
+
+        
     }
 }

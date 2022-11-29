@@ -11,7 +11,7 @@ namespace MarriedMoles
     {
         static readonly double FOX_CREATION_PROBABILITY = 0.02;
         static readonly double RABBIT_CREATION_PROBABILITY = 0.08;
-        static readonly double MALE_MOLE_CREATION_PROBABILITY = 0.06;
+        static readonly double MALE_MOLE_CREATION_PROBABILITY = 0.05;
         static readonly double FEMALE_MOLE_CREATION_PROBABILITY = 0.05;
 
 
